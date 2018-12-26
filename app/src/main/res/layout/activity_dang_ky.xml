@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+
+    =
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_margin="16dp">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars[14]"
+                android:id="@+id/imageView2" android:layout_margin="16dp" tools:layout_editor_absoluteY="32dp"
+                tools:layout_editor_absoluteX="32dp"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/edtEmailMoi" android:padding="16dp" android:hint="Email mới"
+                tools:layout_editor_absoluteY="233dp" tools:layout_editor_absoluteX="16dp"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/edtMatKhauMoi" android:padding="16dp" android:hint="Mật khẩu mới"
+                tools:layout_editor_absoluteY="289dp" tools:layout_editor_absoluteX="16dp"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/edtTenThiSinh" android:hint="Tên thí sinh" android:padding="16dp"
+                tools:layout_editor_absoluteY="176dp" tools:layout_editor_absoluteX="16dp"/>
+        <Button
+                android:text="Đăng ký"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btnChuyenTrangDangKy"
+                android:textColor="@android:color/white" android:textStyle="bold"
+                android:background="@color/colorAccent" tools:layout_editor_absoluteY="362dp"
+                tools:layout_editor_absoluteX="16dp" android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+        <Button
+                android:text="Trở lại trang Đăng nhập"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btnChuyenTrangDangNhap"
+                style="@style/Widget.MaterialComponents.Button.TextButton" tools:layout_editor_absoluteY="442dp"
+                tools:layout_editor_absoluteX="16dp" android:textSize="12sp"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "229150932764",
+    "firebase_url": "https://thithuic3spark.firebaseio.com",
+    "project_id": "thithuic3spark",
+    "storage_bucket": "thithuic3spark.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229150932764:android:b0f4b5c38ddae21d",
+        "android_client_info": {
+          "package_name": "com.example.quoctrungnguyen.thithuic3spark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229150932764-58sb81vvqinlj0em6tqdgt6g11h31505.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quoctrungnguyen.thithuic3spark",
+            "certificate_hash": "903bb214b207b3f4b8284d538d8f68fc43c6db3e"
+          }
+        },
+        {
+          "client_id": "229150932764-uq2o71bn5oa0s43vdq244al4ikvjqf1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApVp6HnMHLFR-qkRtqwGHt3nuaASG9Snc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229150932764-uq2o71bn5oa0s43vdq244al4ikvjqf1g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

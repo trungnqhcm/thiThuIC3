@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Login" tools:layout_editor_absoluteY="25dp">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_margin="16dp">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars[12]"
+                android:id="@+id/imageView" android:layout_margin="16dp"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/edtEmailDangNhap" android:padding="16dp" android:hint="Email"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/editMatKhauDangNhap" android:padding="16dp" android:hint="Mật khẩu"/>
+        <Button
+                android:text="Đăng nhập"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btnDangNhap" android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp" android:background="@color/colorAccent"
+                android:textColor="@android:color/white"/>
+        <Button
+                android:text="Đăng ký"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btnChuyenTrangDangKy"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+        <Button
+                android:text="skip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btnSkip" tools:layout_editor_absoluteY="503dp"
+                tools:layout_editor_absoluteX="280dp"
+                android:textAppearance="@style/TextAppearance.Widget.AppCompat.ExpandedMenu.Item"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

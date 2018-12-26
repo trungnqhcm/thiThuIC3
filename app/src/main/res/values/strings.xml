@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">thiThuIC3Spark</string>
+    <string name="title_activity_chon_bai_thi">ChonBaiThi</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="section_1">Căn bản máy</string>
+    <string name="section_2">Phần mềm thiết</string>
+    <string name="section_3">Cuộc sống trực tuyế</string>
+    <string name="textview">TextView</string>
+
+
+</resources>
