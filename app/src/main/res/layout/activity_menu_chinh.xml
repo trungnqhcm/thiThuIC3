@@ -5,7 +5,7 @@
                                                  android:id="@+id/main_content"
                                                  android:layout_height="match_parent"
                                                  android:fitsSystemWindows="true"
-                                                 tools:context=".MenuChonBai"
+                                                 tools:context=".menuChinh"
                                                  tools:targetApi="11"
                                                  android:layout_width="match_parent">
 
@@ -30,14 +30,14 @@
                     android:gravity="right|center" android:layout_weight="1" android:paddingBottom="8dp"
                     android:paddingTop="8dp"/>
             <TextView
-                    android:text="Tên thí sinh"
+                    android:text="Loading..."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" android:id="@+id/tvTenThiSinh" android:padding="8dp"
                     android:gravity="left|center" android:textStyle="bold"/>
         </LinearLayout>
         <android.support.v7.widget.GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="195dp">
 
             <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
@@ -53,13 +53,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:padding="4dp" android:gravity="center" android:textSize="10sp"/>
+                            android:padding="4dp" android:gravity="center" android:textSize="12sp"/>
                     <TextView
-                            android:text="..."
+                            android:text="Loading..."
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/tvDiemCaoNhat"
                             android:padding="4dp" android:gravity="center"
-                            android:textSize="24sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                            android:textSize="30sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
@@ -76,22 +76,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:padding="4dp" android:gravity="center" android:textSize="10sp"/>
+                            android:padding="4dp" android:gravity="center" android:textSize="12sp"/>
                     <TextView
-                            android:text="..."
+                            android:text="Loading..."
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/tvDiemGanDay"
                             android:gravity="center"
-                            android:textStyle="bold" android:textSize="24sp"
+                            android:textStyle="bold" android:textSize="30sp"
                             android:padding="4dp" android:layout_marginBottom="8dp"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </android.support.v7.widget.GridLayout>
         <Button
-                android:text="THI THỬ"
+                android:text="@string/thi_thu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/button2"
-                style="@android:style/Widget.Material.Button.Colored"/>
+                android:layout_height="wrap_content" android:id="@+id/btnThiThu"
+                android:background="@color/colorPrimary" android:textColor="@android:color/background_light"/>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

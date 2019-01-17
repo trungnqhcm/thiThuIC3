@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.quoctrungnguyen.thithuic3spark.Models.Users
 import com.google.firebase.database.*
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_dang_nhap.*
 
 
@@ -22,6 +23,8 @@ class DangNhap : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dang_nhap)
+
+
 
         Log.d("BUTTON", "Da dc nhan")
 
@@ -42,6 +45,8 @@ class DangNhap : AppCompatActivity() {
          btnChuyenTrangDangKy.setOnClickListener() {
              Log.d("BUTTON", "Da dc nhan ${user.uid}")
             chuyenSangTrangDangKy()
+
+
         }
     }
 
@@ -62,6 +67,7 @@ class DangNhap : AppCompatActivity() {
                     Log.w("signin", "signInWithEmail:failure", it.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
+
                 }
 
             }
@@ -70,7 +76,9 @@ class DangNhap : AppCompatActivity() {
 
 
     private fun chuyenSangTrangChonBaiTest() {
-        val intent = Intent (this,  MenuChonBai::class.java)
+
+
+        val intent = Intent (this,  menuChinh::class.java)
         Log.d("BUTTON", "Tao dc Intent")
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
         //intent.putExtra("uid", user.uid)

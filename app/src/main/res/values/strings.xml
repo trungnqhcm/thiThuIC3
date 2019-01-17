@@ -7,6 +7,17 @@
     <string name="section_2">Phần mềm thiết</string>
     <string name="section_3">Cuộc sống trực tuyế</string>
     <string name="textview">TextView</string>
+    <string name="thi_thu">THI THỬ</string>
+    <string name="title_activity_quest_tion">QuestTion</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_question">QuestionActivity</string>
 
 
 </resources>
