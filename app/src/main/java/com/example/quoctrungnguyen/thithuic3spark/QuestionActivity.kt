@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -60,11 +61,6 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         Log.d("Checkin","After genquestion Questionlist.size = ${Common.questionList.size}")
 
 
-
-
-
-
-
     }
 
     private fun getFragmentList() {
@@ -117,6 +113,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         if (Common.questionList.size > 0) {
             txt_timer.visibility = View.VISIBLE
             txt_right_answer.visibility = View.VISIBLE
+            txt_right_answer.text = "0 / ${Common.questionList.size}"
 
             countTimer()
 
@@ -136,6 +133,100 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             view_pager.adapter = fragmentAdapter
 
             sliding_tabs.setupWithViewPager(view_pager)
+
+
+            view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+
+                val SCROLLING_RIGHT = 0
+                val SCROLLING_LEFT = 1
+                val SCROLLING_UNDETERMINED = 2
+
+                var currentScrollDirection = SCROLLING_UNDETERMINED
+
+                private val isScrollDirectioUndetermined: Boolean
+                    get() = currentScrollDirection == SCROLLING_UNDETERMINED
+
+                private val isScrollDirectioLeft: Boolean
+                    get() = currentScrollDirection == SCROLLING_LEFT
+
+                private val isScrollDirectioRight: Boolean
+                    get() = currentScrollDirection == SCROLLING_RIGHT
+
+                private fun setScrollingDirection (positionOffset: Float) {
+                    if (1 - positionOffset >= 0.5)
+                        this.currentScrollDirection = SCROLLING_RIGHT
+                    else if (1 - positionOffset < 0.5)
+                        this.currentScrollDirection = SCROLLING_LEFT
+
+                }
+
+
+                override fun onPageScrollStateChanged(p0: Int) {
+                    if (p0 == ViewPager.SCROLL_STATE_IDLE)
+                        this.currentScrollDirection = SCROLLING_UNDETERMINED
+                }
+
+                override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+
+                    if (isScrollDirectioUndetermined)
+                        setScrollingDirection(p1)
+
+
+                }
+
+                override fun onPageSelected(p0: Int) {
+
+                    val questionFragment: QuestionFragment
+                    var positon = 0
+                    if (p0 > 0 ) {
+                        if (isScrollDirectioRight) {
+                            questionFragment = Common.fragmentList[p0 - 1]
+                            positon = p0 - 1
+                        } else if (isScrollDirectioLeft) {
+                            questionFragment = Common.fragmentList[p0 + 1]
+                            positon = p0 + 1
+                        } else {
+                            questionFragment = Common.fragmentList[p0]
+                        }
+                    } else {
+                        questionFragment = Common.fragmentList[0]
+                        positon = 0
+                    }
+
+                    if (Common.answerSheetList[positon].type == Common.ANSWER_TYPE.NO_ANSWER) {
+                        val question_state = questionFragment.selectedAnswer()
+                        Common.answerSheetList[positon] = question_state
+                        adapter.notifyDataSetChanged()
+
+                        countCorrectAnswer()
+
+                        Log.d("Checkin","txt_right_answer = ${Common.right_answer_count} / ${Common.questionList.size} ")
+
+                        txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
+
+                        if (question_state.type != Common.ANSWER_TYPE.NO_ANSWER) {
+                            questionFragment.showCorrectAnswer()
+                            questionFragment.disableAnswer()
+                        }
+                    }
+
+
+
+                }
+
+            })
+        }
+    }
+
+    private fun countCorrectAnswer() {
+        Common.right_answer_count = 0
+        Common.wrong_answer_count = 0
+
+        for (item  in Common.answerSheetList) {
+            if (item.type == Common.ANSWER_TYPE.RIGH_ANSWER)
+                Common.right_answer_count++
+            else if (item.type == Common.ANSWER_TYPE.WRONG_ANSER)
+                Common.wrong_answer_count++
         }
     }
 
@@ -158,7 +249,23 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
 
     private fun finishGame() {
-        //later
+        val positon = view_pager.currentItem
+        val questionFragment = Common.fragmentList[positon]
+
+        val question_state = questionFragment.selectedAnswer()
+        Common.answerSheetList[positon] = question_state
+        adapter.notifyDataSetChanged()
+
+        countCorrectAnswer()
+
+        Log.d("Checkin","txt_right_answer = ${Common.right_answer_count} / ${Common.questionList.size} ")
+
+        txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
+
+        if (question_state.type != Common.ANSWER_TYPE.NO_ANSWER) {
+            questionFragment.showCorrectAnswer()
+            questionFragment.disableAnswer()
+        }
     }
 
     override fun onBackPressed() {

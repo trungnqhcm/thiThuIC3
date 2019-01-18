@@ -6,6 +6,7 @@ import com.example.quoctrungnguyen.thithuic3spark.Models.Question
 import com.example.quoctrungnguyen.thithuic3spark.Models.Users
 import com.example.quoctrungnguyen.thithuic3spark.QuestionActivity
 import com.example.quoctrungnguyen.thithuic3spark.QuestionFragment
+import java.lang.StringBuilder
 
 object Common {
 
@@ -29,6 +30,10 @@ object Common {
     var right_answer_count = 0
 
     var wrong_answer_count = 0
+
+    var no_answer_count = 0
+
+    var data_question = StringBuilder()
 
     enum class ANSWER_TYPE {
         NO_ANSWER,
