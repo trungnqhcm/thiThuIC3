@@ -62,20 +62,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
 
 
-        grid_answer.setHasFixedSize(true)
-        if (Common.questionList.size > 0) {
-            grid_answer.layoutManager = GridLayoutManager( this, if (Common.questionList.size > 5) Common.questionList.size / 2 else Common.questionList.size)
-        }
-        adapter = GridAnswerAdapter(this, Common.answerSheetList)
-        grid_answer.adapter = adapter
 
-        getFragmentList()
-
-        val fragmentAdapter = MyFragmentAdapter(supportFragmentManager, this, Common.fragmentList)
-        view_pager.offscreenPageLimit = Common.questionList.size
-        view_pager.adapter = fragmentAdapter
-
-        sliding_tabs.setupWithViewPager(view_pager)
 
 
     }
@@ -134,6 +121,21 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             countTimer()
 
             genItems()
+
+            grid_answer.setHasFixedSize(true)
+            if (Common.questionList.size > 0) {
+                grid_answer.layoutManager = GridLayoutManager( this, if (Common.questionList.size > 5) Common.questionList.size / 2 else Common.questionList.size)
+            }
+            adapter = GridAnswerAdapter(this, Common.answerSheetList)
+            grid_answer.adapter = adapter
+
+            getFragmentList()
+
+            val fragmentAdapter = MyFragmentAdapter(supportFragmentManager, this, Common.fragmentList)
+            view_pager.offscreenPageLimit = Common.questionList.size
+            view_pager.adapter = fragmentAdapter
+
+            sliding_tabs.setupWithViewPager(view_pager)
         }
     }
 
