@@ -92,10 +92,7 @@ class DangNhap : AppCompatActivity() {
 
     private fun chuyenSangTrangChonBaiTest() {
         val intent = Intent (this,  CategoryActivities::class.java)
-        Log.d("BUTTON", "Tao dc Intent")
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-        //intent.putExtra("uid", user.uid)
-        Log.d("Truyen UID", "Da truyen dc ${user.uid}")
         startActivity(intent)
     }
 

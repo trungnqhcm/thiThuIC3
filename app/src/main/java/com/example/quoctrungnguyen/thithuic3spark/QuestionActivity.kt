@@ -2,6 +2,7 @@ package com.example.quoctrungnguyen.thithuic3spark
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.design.widget.NavigationView
@@ -31,6 +32,8 @@ import java.lang.String
 
 
 class QuestionActivity : AppCompatActivity() {
+
+    var isFinished : Boolean = false
 
     lateinit var countDownTimer: CountDownTimer
 
@@ -171,6 +174,7 @@ class QuestionActivity : AppCompatActivity() {
                                                                                     Common.questionList.size / 2
                                                                             else Common.questionList.size)
             }
+
             adapter = GridAnswerAdapter(this, Common.answerSheetList)
             grid_answer.adapter = adapter
 
@@ -231,11 +235,33 @@ class QuestionActivity : AppCompatActivity() {
 
                     var questionFragment: QuestionFragment
                     var positon = 0
+
+                    if ( isFinished ) {
+                        if (p0 != 0 && p0!=19) {
+                            questionFragment = Common.fragmentList[p0 - 1]
+                            questionFragment.showCorrectAnswer()
+                            questionFragment.disableAnswer()
+
+                            questionFragment = Common.fragmentList[p0 + 1]
+                            questionFragment.showCorrectAnswer()
+                            questionFragment.disableAnswer()
+
+                            questionFragment = Common.fragmentList[p0]
+                            questionFragment.showCorrectAnswer()
+                            questionFragment.disableAnswer()
+                        } else if (p0 == 0 || p0==19) {
+                                questionFragment = Common.fragmentList[p0]
+                                questionFragment.showCorrectAnswer()
+                                questionFragment.disableAnswer()
+                            }
+                    }
+
                     if (p0 > 0 ) {
 
                         if (isScrollDirectioRight) {
                             questionFragment = Common.fragmentList[p0 - 1]
                             positon = p0 - 1
+
                         } else if (isScrollDirectioLeft) {
                             questionFragment = Common.fragmentList[p0 + 1]
                             positon = p0 + 1
@@ -246,6 +272,7 @@ class QuestionActivity : AppCompatActivity() {
                         questionFragment = Common.fragmentList[0]
                         positon = 0
                     }
+
 
 
 
@@ -261,15 +288,6 @@ class QuestionActivity : AppCompatActivity() {
 
                         //txt_right_answer.text = ("${Common.right_answer_count+Common.wrong_answer_count} / ${Common.questionList.size}")
 
-                        if (question_state.type != Common.ANSWER_TYPE.NO_ANSWER) {
-                            //questionFragment.showCorrectAnswer()
-                            //questionFragment.disableAnswer()
-                        }
-
-                        if (question_state.type == Common.ANSWER_TYPE.NO_ANSWER) {
-                            //questionFragment.showCorrectAnswer()
-                            //questionFragment.disableAnswer()
-                        }
                     }
 
 
@@ -312,7 +330,10 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     @SuppressLint("DefaultLocale")
+
     private fun finishGame() {
+
+        isFinished = true
 
         Log.d("Checkin","On finish game")
 
@@ -331,7 +352,7 @@ class QuestionActivity : AppCompatActivity() {
 
         //txt_right_answer.visibility = View.VISIBLE
         //txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
-        for (item  in Common.questionList)
+
             if (question_state.type == Common.ANSWER_TYPE.NO_ANSWER) {
                 questionFragment.showCorrectAnswer()
                 questionFragment.disableAnswer()
@@ -346,31 +367,38 @@ class QuestionActivity : AppCompatActivity() {
         Common.no_answer_count = Common.questionList.size - (Common.right_answer_count + Common.wrong_answer_count)
         Common.data_question = StringBuilder(Gson().toJson(Common.answerSheetList))
 
-        txt_time_result.text = String.format(
-            "%02d:%02d",
-            TimeUnit.MILLISECONDS.toMinutes(Common.timer.toLong()),
-            TimeUnit.MILLISECONDS.toSeconds(Common.timer.toLong()) - TimeUnit.MINUTES.toSeconds(
-                TimeUnit.MILLISECONDS.toMinutes(Common.timer.toLong())
-            )
-        )
-        txt_right_answer_result.text = "${Common.right_answer_count}/${Common.questionList.size}"
+//        txt_time_result.text = String.format(
+//            "%02d:%02d",
+//            TimeUnit.MILLISECONDS.toMinutes(Common.timer.toLong()),
+//            TimeUnit.MILLISECONDS.toSeconds(Common.timer.toLong()) - TimeUnit.MINUTES.toSeconds(
+//                TimeUnit.MILLISECONDS.toMinutes(Common.timer.toLong())
+//            )
+//        )
+//        txt_right_answer_result.text = "${Common.right_answer_count}/${Common.questionList.size}"
+
+        btn_filter_total.setTextColor(Color.BLACK )
+        btn_filter_right.setTextColor(Color.BLACK )
+        btn_filter_wrong.setTextColor(Color.BLACK )
+        btn_filter_no_answer.setTextColor(Color.BLACK )
+
         btn_filter_total.text = "${Common.questionList.size}"
         btn_filter_right.text = "${Common.right_answer_count}"
         btn_filter_wrong.text= "${Common.wrong_answer_count}"
         btn_filter_no_answer.text = "${Common.no_answer_count}"
 
+
         val percent: Int = Common.right_answer_count*100/Common.questionList.size;
-        if(percent > 80)
-            txt_result.text = "Tuyệt vời"
-        else if(percent > 70)
-            txt_result.text = "Quá giỏi"
-        else if(percent > 60)
-            txt_result.text = "Giỏi lắm"
-        else if(percent > 50)
-            txt_result.text = "Gần được"
-        else if(percent > 40)
-            txt_result.text = "Chưa tốt"
-        else txt_result.text = "Rớt"
+        txt_result.setTextColor(Color.RED)
+        if(percent > 50)
+            txt_result.text = "Đạt yêu cầu"
+        else txt_result.text = "Chưa đạt yêu cầu"
+
+
+        btn_home.setOnClickListener() {
+            val intent = Intent (this,  CategoryActivities::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
 
         //startActivityForResult(intent,CODE_GET_RESULT)
 

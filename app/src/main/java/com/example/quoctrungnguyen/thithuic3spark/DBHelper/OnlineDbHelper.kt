@@ -37,7 +37,7 @@ class OnlineDbHelper(internal var context: Context,
             dialog.show()
 
         edmtQuiz.child(category)
-            .child("question")
+            .child("question") .limitToFirst(20)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     Toast.makeText(context, ""+p0.message, Toast.LENGTH_SHORT)
