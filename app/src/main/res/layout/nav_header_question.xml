@@ -26,7 +26,7 @@
                 android:text="Hoàn thành"
                 android:layout_margin="48dp"
                 android:layout_below="@+id/answer_sheet"
-                android:id="@+id/btn_done"
+                android:id="@+id/btn_nop_bai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" style="@style/Widget.AppCompat.Button.Colored"
                 android:textColor="@android:color/white"/>

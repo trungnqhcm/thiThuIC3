@@ -14,36 +14,145 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
 
-        <android.support.v7.widget.Toolbar
-                android:visibility="gone"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.AppBarOverlay"/>
         <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+            <LinearLayout
+                    android:id="@+id/layout_ket_qua_3"
+                    android:visibility="visible"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <Button
-                    android:drawableStart="@drawable/ic_close_black_24dp"
+                <Button
+                        android:drawableStart="@drawable/ic_close_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/btn_exit" android:layout_weight="1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:drawableLeft="@drawable/ic_close_black_24dp"/>
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" android:id="@+id/txt_title" android:layout_weight="1"
+                        android:textSize="18sp" android:textStyle="bold" android:textColor="@android:color/white"
+                        android:gravity="center"/>
+                <Button
+                        android:drawableEnd="@drawable/ic_check_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/btn_nop_bai" android:layout_weight="1"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:drawableRight="@drawable/ic_check_black_24dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/layout_ket_qua_1"
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+                    android:weightSum="4"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <ImageView
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_access_time_black_24dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    <TextView
+                            android:id="@+id/txt_time_result"
+                            android:text="01:00"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:textSize="24sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_gravity="center_vertical|center"
+                        android:orientation="horizontal"
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:gravity="center">
+                    <TextView
+                            android:id="@+id/txt_result"
+                            android:text="SUCCESS"
+                            android:textColor="@android:color/white"
+                            android:layout_marginLeft="20dp"
+                            android:padding="16dp"
+                            android:textSize="24dp"
+                            android:textStyle="bold"
+                            android:background="@color/colorPrimary"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:id="@+id/txt_right_answer_result"
+                            android:text="30/30"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                    android:id="@+id/layout_ket_qua_2"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/btn_exit" android:layout_weight="1"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:drawableLeft="@drawable/ic_close_black_24dp"/>
-            <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" android:id="@+id/txt_title" android:layout_weight="1"
-                    android:textSize="18sp" android:textStyle="bold" android:textColor="@android:color/white"
-                    android:gravity="center"/>
-            <Button
-                    android:drawableEnd="@drawable/ic_check_black_24dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/btn_done" android:layout_weight="1"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:drawableRight="@drawable/ic_check_black_24dp"/>
+                    android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                <Button
+                        android:id="@+id/btn_filter_total"
+                        android:drawableLeft="@drawable/ic_format_list_bulleted_black_24dp"
+                        android:text="30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <Button
+                        android:id="@+id/btn_filter_right"
+                        android:drawableLeft="@drawable/ic_check_realy_black_24dp"
+                        android:text="30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <Button
+                        android:id="@+id/btn_filter_wrong"
+                        android:drawableLeft="@drawable/ic_clear_black_24dp"
+                        android:text="30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <Button
+                        android:id="@+id/btn_filter_no_answer"
+                        android:drawableLeft="@drawable/ic_error_outline_black_24dp"
+                        android:text="30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
