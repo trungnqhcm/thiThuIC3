@@ -1,12 +1,12 @@
 package com.example.quoctrungnguyen.thithuic3spark
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
-import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
@@ -26,20 +26,17 @@ import kotlinx.android.synthetic.main.app_bar_question.*
 import kotlinx.android.synthetic.main.content_question.*
 import java.util.concurrent.TimeUnit
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
-import com.example.quoctrungnguyen.thithuic3spark.R.id.action_done
-import com.example.quoctrungnguyen.thithuic3spark.R.id.search_voice_btn
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.nav_header_question.*
-import org.jetbrains.anko.toast
+import java.lang.String
 
 
-class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class QuestionActivity : AppCompatActivity() {
 
     lateinit var countDownTimer: CountDownTimer
 
     var time_play = Common.TOTAL_TIME
+
+
 
     lateinit var adapter: GridAnswerAdapter
 
@@ -47,11 +44,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
-        setSupportActionBar(toolbar)
-
-        val btnDone = findViewById(R.id.btn_done) as Button
-        val btnAbort = findViewById(R.id.btn_exit) as Button
-
+        //setSupportActionBar(toolbar)
 
         if (Common.selectedCategory!!.id == 1)
             txt_title.text = "Cơ bản máy tính"
@@ -65,18 +58,18 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 //                .setAction("Action", null).show()
 //        }
 
-        val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
+//        val toggle = ActionBarDrawerToggle(
+//            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+//        )
+//        drawer_layout.addDrawerListener(toggle)
+//        toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+        //nav_view.setNavigationItemSelectedListener(this)
 
         genQuestion()
 
 
-        btnDone.setOnClickListener() {
+        btn_nop_bai.setOnClickListener() {
             MaterialStyledDialog.Builder(this)
                 .setTitle("Awesome!")
                 .setDescription("Có chắc chắn hoàn thành!!")
@@ -93,7 +86,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 .show()
         }
 
-        btnAbort.setOnClickListener() {
+        btn_exit.setOnClickListener() {
             MaterialStyledDialog.Builder(this)
                 .setTitle("Đợi chút!!")
                 .setDescription("Có chắc chắn hủy bỏ bài làm!!")
@@ -266,7 +259,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
                         Log.d("Checkin","txt_right_answer = ${Common.right_answer_count} / ${Common.questionList.size} ")
 
-                        txt_right_answer.text = ("${Common.right_answer_count+Common.wrong_answer_count} / ${Common.questionList.size}")
+                        //txt_right_answer.text = ("${Common.right_answer_count+Common.wrong_answer_count} / ${Common.questionList.size}")
 
                         if (question_state.type != Common.ANSWER_TYPE.NO_ANSWER) {
                             //questionFragment.showCorrectAnswer()
@@ -306,6 +299,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 finishGame()
             }
 
+            @SuppressLint("DefaultLocale")
             override fun onTick(interval: Long) {
                 txt_timer.text = (java.lang.String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(interval),
@@ -317,6 +311,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     }
 
+    @SuppressLint("DefaultLocale")
     private fun finishGame() {
 
         Log.d("Checkin","On finish game")
@@ -336,18 +331,48 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         //txt_right_answer.visibility = View.VISIBLE
         //txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
+        for (item  in Common.questionList)
+            if (question_state.type == Common.ANSWER_TYPE.NO_ANSWER) {
+                questionFragment.showCorrectAnswer()
+                questionFragment.disableAnswer()
+            }
 
-        if (question_state.type == Common.ANSWER_TYPE.NO_ANSWER) {
-            questionFragment.showCorrectAnswer()
-            questionFragment.disableAnswer()
-        }
+        layout_ket_qua_1.visibility = View.VISIBLE
+        layout_ket_qua_2.visibility = View.VISIBLE
+        layout_ket_qua_3.visibility = View.GONE
 
-        val intent = Intent(this@QuestionActivity, Result::class.java)
+        //val intent = Intent(this@QuestionActivity, Result::class.java)
         Common.timer = Common.TOTAL_TIME - time_play
         Common.no_answer_count = Common.questionList.size - (Common.right_answer_count + Common.wrong_answer_count)
         Common.data_question = StringBuilder(Gson().toJson(Common.answerSheetList))
 
-        startActivityForResult(intent,CODE_GET_RESULT)
+        txt_time_result.text = String.format(
+            "%02d:%02d",
+            TimeUnit.MILLISECONDS.toMinutes(Common.timer.toLong()),
+            TimeUnit.MILLISECONDS.toSeconds(Common.timer.toLong()) - TimeUnit.MINUTES.toSeconds(
+                TimeUnit.MILLISECONDS.toMinutes(Common.timer.toLong())
+            )
+        )
+        txt_right_answer_result.text = "${Common.right_answer_count}/${Common.questionList.size}"
+        btn_filter_total.text = "${Common.questionList.size}"
+        btn_filter_right.text = "${Common.right_answer_count}"
+        btn_filter_wrong.text= "${Common.wrong_answer_count}"
+        btn_filter_no_answer.text = "${Common.no_answer_count}"
+
+        val percent: Int = Common.right_answer_count*100/Common.questionList.size;
+        if(percent > 80)
+            txt_result.text = "Tuyệt vời"
+        else if(percent > 70)
+            txt_result.text = "Quá giỏi"
+        else if(percent > 60)
+            txt_result.text = "Giỏi lắm"
+        else if(percent > 50)
+            txt_result.text = "Gần được"
+        else if(percent > 40)
+            txt_result.text = "Chưa tốt"
+        else txt_result.text = "Rớt"
+
+        //startActivityForResult(intent,CODE_GET_RESULT)
 
     }
 
@@ -372,32 +397,32 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
-            }
-            R.id.nav_gallery -> {
-
-            }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
-        }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
-    }
+//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//        // Handle navigation view item clicks here.
+//        when (item.itemId) {
+//            R.id.nav_camera -> {
+//                // Handle the camera action
+//            }
+//            R.id.nav_gallery -> {
+//
+//            }
+//            R.id.nav_slideshow -> {
+//
+//            }
+//            R.id.nav_manage -> {
+//
+//            }
+//            R.id.nav_share -> {
+//
+//            }
+//            R.id.nav_send -> {
+//
+//            }
+//        }
+//
+//        drawer_layout.closeDrawer(GravityCompat.START)
+//        return true
+//    }
 
     fun backToQuest() {
 
