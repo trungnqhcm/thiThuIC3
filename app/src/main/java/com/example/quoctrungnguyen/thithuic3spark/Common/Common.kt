@@ -36,7 +36,8 @@ object Common {
 
     var data_question = StringBuilder()
 
-    val KEY_GO_TO_QUESTION: String? = "position_go_to"
+    val KEY_GO_TO_QUESTION:String? = "position_go_to"
+    val KEY_BACK_FROM_RESULT:String? = "back_from_result"
 
     fun clear (){
         answerSheetList.clear()
