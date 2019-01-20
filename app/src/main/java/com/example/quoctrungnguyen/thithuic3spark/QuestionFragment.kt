@@ -27,6 +27,7 @@ class QuestionFragment : Fragment(), IAnswerSelected {
     override fun selectedAnswer(): CurrentQuestion {
         //Remove duplicate
         Common.selected_values.distinct()
+        Common.selected_values.sort()
 
         if (Common.answerSheetList[questionIndex].type == Common.ANSWER_TYPE.NO_ANSWER  ) {
             val currentQuestion = CurrentQuestion(questionIndex, Common.ANSWER_TYPE.NO_ANSWER)

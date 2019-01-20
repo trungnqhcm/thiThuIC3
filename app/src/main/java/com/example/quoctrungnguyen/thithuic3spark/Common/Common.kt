@@ -1,5 +1,6 @@
 package com.example.quoctrungnguyen.thithuic3spark.Common
 
+import android.content.Intent
 import com.example.quoctrungnguyen.thithuic3spark.Models.Category
 import com.example.quoctrungnguyen.thithuic3spark.Models.CurrentQuestion
 import com.example.quoctrungnguyen.thithuic3spark.Models.Question
@@ -34,6 +35,8 @@ object Common {
     var no_answer_count = 0
 
     var data_question = StringBuilder()
+
+    val KEY_GO_TO_QUESTION: String? = "position_go_to"
 
     enum class ANSWER_TYPE {
         NO_ANSWER,

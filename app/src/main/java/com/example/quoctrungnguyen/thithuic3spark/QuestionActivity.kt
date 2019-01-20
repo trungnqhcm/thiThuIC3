@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.app_bar_question.*
 import kotlinx.android.synthetic.main.content_question.*
 import java.util.concurrent.TimeUnit
 import android.util.Log
+import android.widget.Button
+import kotlinx.android.synthetic.main.nav_header_question.*
 
 
 class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -40,9 +42,16 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
+
         setSupportActionBar(toolbar)
 
-        Log.d("Checkin","Vao Question Activity")
+        if (Common.selectedCategory!!.id == 1)
+            supportActionBar!!.setTitle("Cơ bản máy tính")
+        else if (Common.selectedCategory!!.id == 2)
+            supportActionBar!!.setTitle("Phần mềm thiết yếu")
+        else
+            supportActionBar!!.setTitle("Cuộc sống trực tuyến")
+         Log.d("Checkin","Vao Question Activity")
 //        fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
@@ -59,6 +68,20 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         genQuestion()
 
         Log.d("Checkin","After genquestion Questionlist.size = ${Common.questionList.size}")
+
+
+//        val btn_done = findViewById(R.id.btn_done) as Button
+//        btn_done.setOnClickListener() {
+//            MaterialStyledDialog.Builder(this@QuestionActivity)
+//                .setTitle("Có chắc chắn hoàn thành!!")
+//                .setPositiveText("Chắc chắn")
+//                .onPositive{dialog, which ->
+//                    dialog.dismiss()
+//                    finishGame()
+//                }.show()
+//
+//
+//        }
 
 
     }
@@ -112,8 +135,7 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         if (Common.questionList.size > 0) {
             txt_timer.visibility = View.VISIBLE
-            txt_right_answer.visibility = View.VISIBLE
-            txt_right_answer.text = "0 / ${Common.questionList.size}"
+
 
             countTimer()
 
@@ -121,7 +143,9 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
             grid_answer.setHasFixedSize(true)
             if (Common.questionList.size > 0) {
-                grid_answer.layoutManager = GridLayoutManager( this, if (Common.questionList.size > 5) Common.questionList.size / 2 else Common.questionList.size)
+                grid_answer.layoutManager = GridLayoutManager( this, if (Common.questionList.size > 5)
+                                                                                    Common.questionList.size / 2
+                                                                            else Common.questionList.size)
             }
             adapter = GridAnswerAdapter(this, Common.answerSheetList)
             grid_answer.adapter = adapter
@@ -202,11 +226,16 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
                         Log.d("Checkin","txt_right_answer = ${Common.right_answer_count} / ${Common.questionList.size} ")
 
-                        txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
+                        txt_right_answer.text = ("${Common.right_answer_count+Common.wrong_answer_count} / ${Common.questionList.size}")
 
                         if (question_state.type != Common.ANSWER_TYPE.NO_ANSWER) {
-                            questionFragment.showCorrectAnswer()
-                            questionFragment.disableAnswer()
+                            //questionFragment.showCorrectAnswer()
+                            //questionFragment.disableAnswer()
+                        }
+
+                        if (question_state.type == Common.ANSWER_TYPE.NO_ANSWER) {
+                            //questionFragment.showCorrectAnswer()
+                            //questionFragment.disableAnswer()
                         }
                     }
 
@@ -260,7 +289,8 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         Log.d("Checkin","txt_right_answer = ${Common.right_answer_count} / ${Common.questionList.size} ")
 
-        txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
+        //txt_right_answer.visibility = View.VISIBLE
+        //txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
 
         if (question_state.type != Common.ANSWER_TYPE.NO_ANSWER) {
             questionFragment.showCorrectAnswer()

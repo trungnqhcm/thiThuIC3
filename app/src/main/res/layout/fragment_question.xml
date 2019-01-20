@@ -34,27 +34,32 @@
                 android:id="@+id/txt_question_text"
                 android:text="What do you choose"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" android:paddingLeft="8dp" android:paddingRight="8dp"
+                android:paddingBottom="16dp" android:paddingTop="16dp"/>
 
         <CheckBox
+                android:padding="8dp"
                 android:id="@+id/ckb_A"
                 android:text="Answer A"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <CheckBox
+                android:padding="8dp"
                 android:id="@+id/ckb_B"
                 android:text="Answer B"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <CheckBox
+                android:padding="8dp"
                 android:id="@+id/ckb_C"
                 android:text="Answer C"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <CheckBox
+                android:padding="8dp"
                 android:id="@+id/ckb_D"
                 android:text="Answer D"
                 android:layout_width="match_parent"

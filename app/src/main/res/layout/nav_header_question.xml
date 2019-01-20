@@ -17,14 +17,28 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
-            android:text="DONE"
-            android:layout_margin="16dp"
-            android:layout_below="@+id/answer_sheet"
-            android:id="@+id/btn_done"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <Button
+                android:text="Hoàn thành"
+                android:layout_margin="48dp"
+                android:layout_below="@+id/answer_sheet"
+                android:id="@+id/btn_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" style="@style/Widget.AppCompat.Button.Colored"
+                android:textColor="@android:color/white"/>
+        <Button
+                android:text="Hủy bỏ"
+                android:layout_margin="16dp"
+                android:layout_below="@+id/answer_sheet"
+                android:id="@+id/btn_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:textSize="14sp" android:textColor="@color/md_edittext_error"/>
+    </LinearLayout>
 
 
 </RelativeLayout>

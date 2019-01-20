@@ -21,7 +21,7 @@ class GridAnswerAdapter(internal var context: Context,
         if (answerSheetList[position].type == Common.ANSWER_TYPE.RIGH_ANSWER)
             holder.question_item.setBackgroundResource(R.drawable.grid_item_right_answer)
         else if (answerSheetList[position].type == Common.ANSWER_TYPE.WRONG_ANSER)
-            holder.question_item.setBackgroundResource(R.drawable.grid_item_wrong_answer)
+            holder.question_item.setBackgroundResource(R.drawable.grid_item_right_answer)
         else
             holder.question_item.setBackgroundResource(R.drawable.grid_item_no_answer)
 
