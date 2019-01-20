@@ -38,6 +38,20 @@ object Common {
 
     val KEY_GO_TO_QUESTION: String? = "position_go_to"
 
+    fun clear (){
+        answerSheetList.clear()
+        questionList.clear()
+        selectedCategory = null
+        fragmentList.clear()
+        selected_values.clear()
+        timer = 0
+        right_answer_count = 0
+        wrong_answer_count = 0
+        no_answer_count = 0
+        data_question = StringBuilder()
+
+    }
+
     enum class ANSWER_TYPE {
         NO_ANSWER,
         RIGH_ANSWER,

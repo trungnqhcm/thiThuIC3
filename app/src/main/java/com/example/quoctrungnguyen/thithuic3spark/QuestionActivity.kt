@@ -1,5 +1,6 @@
 package com.example.quoctrungnguyen.thithuic3spark
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.design.widget.NavigationView
@@ -26,12 +27,15 @@ import kotlinx.android.synthetic.main.content_question.*
 import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
+import com.example.quoctrungnguyen.thithuic3spark.R.id.action_done
+import com.example.quoctrungnguyen.thithuic3spark.R.id.search_voice_btn
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.nav_header_question.*
+import org.jetbrains.anko.toast
 
 
 class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-
 
     lateinit var countDownTimer: CountDownTimer
 
@@ -45,12 +49,16 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         setSupportActionBar(toolbar)
 
+        val btnDone = findViewById(R.id.btn_done) as Button
+        val btnAbort = findViewById(R.id.btn_exit) as Button
+
+
         if (Common.selectedCategory!!.id == 1)
-            supportActionBar!!.setTitle("Cơ bản máy tính")
+            txt_title.text = "Cơ bản máy tính"
         else if (Common.selectedCategory!!.id == 2)
-            supportActionBar!!.setTitle("Phần mềm thiết yếu")
+            txt_title.text = "Phần mềm thiết yếu"
         else
-            supportActionBar!!.setTitle("Cuộc sống trực tuyến")
+            txt_title.text ="Cuộc sống trực tuyến"
          Log.d("Checkin","Vao Question Activity")
 //        fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -67,21 +75,43 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         genQuestion()
 
-        Log.d("Checkin","After genquestion Questionlist.size = ${Common.questionList.size}")
+
+        btnDone.setOnClickListener() {
+            MaterialStyledDialog.Builder(this)
+                .setTitle("Awesome!")
+                .setDescription("Có chắc chắn hoàn thành!!")
+                .setPositiveText("Chắc chắn")
+                .setCancelable(true)
+                .onPositive { dialog, _ ->
+                    Log.d("Checkin","Nop bai")
+
+                    dialog.dismiss()
+                    finishGame()
 
 
-//        val btn_done = findViewById(R.id.btn_done) as Button
-//        btn_done.setOnClickListener() {
-//            MaterialStyledDialog.Builder(this@QuestionActivity)
-//                .setTitle("Có chắc chắn hoàn thành!!")
-//                .setPositiveText("Chắc chắn")
-//                .onPositive{dialog, which ->
-//                    dialog.dismiss()
-//                    finishGame()
-//                }.show()
+                }
+                .show()
+        }
+
+        btnAbort.setOnClickListener() {
+            MaterialStyledDialog.Builder(this)
+                .setTitle("Đợi chút!!")
+                .setDescription("Có chắc chắn hủy bỏ bài làm!!")
+                .setPositiveText("Chắc chắn")
+                .setCancelable(true)
+                .onPositive { dialog, _ ->
+                    Log.d("Checkin","Nop bai")
+
+                    dialog.dismiss()
+                    backToQuest()
+
+
+                }
+                .show()
+        }
 //
-//
-//        }
+
+
 
 
     }
@@ -124,9 +154,10 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     }else setupQuestion()
                 }
 
-
             }, Common.selectedCategory!!.name!!.replace(" ","")
                 .replace("/", "_"))
+
+
     }
 
     private fun setupQuestion() {
@@ -177,10 +208,15 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     get() = currentScrollDirection == SCROLLING_RIGHT
 
                 private fun setScrollingDirection (positionOffset: Float) {
-                    if (1 - positionOffset >= 0.5)
+
+
+
+                    if (1 - positionOffset >= 0.5 )
                         this.currentScrollDirection = SCROLLING_RIGHT
-                    else if (1 - positionOffset < 0.5)
+                    else if (1 - positionOffset < 0.5 )
                         this.currentScrollDirection = SCROLLING_LEFT
+
+
 
                 }
 
@@ -200,9 +236,10 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
                 override fun onPageSelected(p0: Int) {
 
-                    val questionFragment: QuestionFragment
+                    var questionFragment: QuestionFragment
                     var positon = 0
                     if (p0 > 0 ) {
+
                         if (isScrollDirectioRight) {
                             questionFragment = Common.fragmentList[p0 - 1]
                             positon = p0 - 1
@@ -216,6 +253,9 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                         questionFragment = Common.fragmentList[0]
                         positon = 0
                     }
+
+
+
 
                     if (Common.answerSheetList[positon].type == Common.ANSWER_TYPE.NO_ANSWER) {
                         val question_state = questionFragment.selectedAnswer()
@@ -278,6 +318,11 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
 
     private fun finishGame() {
+
+        Log.d("Checkin","On finish game")
+
+        val CODE_GET_RESULT = 9999
+
         val positon = view_pager.currentItem
         val questionFragment = Common.fragmentList[positon]
 
@@ -287,23 +332,28 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         countCorrectAnswer()
 
-        Log.d("Checkin","txt_right_answer = ${Common.right_answer_count} / ${Common.questionList.size} ")
+        Log.d("Checkin","Counted")
 
         //txt_right_answer.visibility = View.VISIBLE
         //txt_right_answer.text = ("${Common.right_answer_count} / ${Common.questionList.size}")
 
-        if (question_state.type != Common.ANSWER_TYPE.NO_ANSWER) {
+        if (question_state.type == Common.ANSWER_TYPE.NO_ANSWER) {
             questionFragment.showCorrectAnswer()
             questionFragment.disableAnswer()
         }
+
+        val intent = Intent(this@QuestionActivity, Result::class.java)
+        Common.timer = Common.TOTAL_TIME - time_play
+        Common.no_answer_count = Common.questionList.size - (Common.right_answer_count + Common.wrong_answer_count)
+        Common.data_question = StringBuilder(Gson().toJson(Common.answerSheetList))
+
+        startActivityForResult(intent,CODE_GET_RESULT)
+
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
+        backToQuest()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -347,5 +397,15 @@ class QuestionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun backToQuest() {
+
+        Common.clear()
+
+
+        val intent = Intent (this,  CategoryActivities::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }
